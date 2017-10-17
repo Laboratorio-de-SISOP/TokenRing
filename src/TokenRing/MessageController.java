@@ -83,20 +83,23 @@ public class MessageController implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            /* Converte string para array de bytes para envio pelo socket. */
-            String msg = "4060"; /* Lembre-se do protocolo, "4060" é o token! */
-            sendData = msg.getBytes();
             
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);         
-                
-            /* Realiza envio da mensagem. */
-            try {
-                clientSocket.send(sendPacket);
-            } catch (IOException ex) {
-                Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            if(token == true){
 
+                /* Converte string para array de bytes para envio pelo socket. */
+                String msg = "4060"; /* Lembre-se do protocolo, "4060" é o token! */
+                sendData = msg.getBytes();
+            
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);         
+                
+                /* Realiza envio da mensagem. */
+                try {
+                    clientSocket.send(sendPacket);
+                } catch (IOException ex) {
+                    Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             /* A estação fica aguardando a ação gerada pela função ReceivedMessage(). */
             try {
                 WaitForMessage.acquire();
